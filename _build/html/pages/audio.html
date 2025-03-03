@@ -1,0 +1,550 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Video Processing Guide" href="video.html" /><link rel="prev" title="Usage" href="usage.html" />
+
+    <link rel="shortcut icon" href="https://emoji.aranja.com/static/emoji-data/img-apple-160/1f9d0.png"/><!-- Generated with Sphinx 8.2.3 and Furo 2024.08.06 -->
+        <title>Audio Processing Guide - psifx - 0.1.1</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=8931a844" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #0d1117;
+  --color-code-foreground: #e6edf3;
+  --color-background-primary: #1f2226;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #0d1117;
+  --color-code-foreground: #e6edf3;
+  --color-background-primary: #1f2226;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">psifx - 0.1.1</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">psifx - 0.1.1</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Audio Processing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="video.html">Video Processing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text Processing Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/api.html">Python API</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Python API</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/generated/psifx.html">psifx</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of psifx</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../reference/generated/io.html">io</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/cli.html">Command Line Interface</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/pages/audio.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="audio-processing-guide">
+<h1>Audio Processing Guide<a class="headerlink" href="#audio-processing-guide" title="Link to this heading">¶</a></h1>
+<p>This document covers the <code class="docutils literal notranslate"><span class="pre">psifx</span></code> commands for audio pre-processing, inference, and visualization.</p>
+<section id="audio-pre-processing">
+<h2>1. Audio Pre-processing<a class="headerlink" href="#audio-pre-processing" title="Link to this heading">¶</a></h2>
+<section id="audio-extraction">
+<h3>Audio Extraction<a class="headerlink" href="#audio-extraction" title="Link to this heading">¶</a></h3>
+<p>Extracts audio from a video file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>manipulation<span class="w"> </span>extraction<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--video<span class="w"> </span>Videos/Video.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--audio<span class="w"> </span>Audios/Audio.wav
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--video</span></code>: Path to the input video file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--audio</span></code>: Path for the output audio file.</p></li>
+</ul>
+</section>
+<section id="audio-conversion">
+<h3>Audio Conversion<a class="headerlink" href="#audio-conversion" title="Link to this heading">¶</a></h3>
+<p>Converts any audio track to a mono audio track at 16kHz sample rate.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>manipulation<span class="w"> </span>conversion<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--audio<span class="w"> </span>Audios/Audio.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mono_audio<span class="w"> </span>Audios/MonoAudio.wav
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--audio</span></code>: Path to the input audio file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mono_audio</span></code>: Path to the output audio file.</p></li>
+</ul>
+</section>
+<section id="audio-split">
+<h3>Audio Split<a class="headerlink" href="#audio-split" title="Link to this heading">¶</a></h3>
+<p>Split a stereo audio track into two mono audio tracks.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>manipulation<span class="w"> </span>split<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--stereo_audio<span class="w">  </span>Audios/Audio.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--left_audio<span class="w"> </span>Audios/MonoLeft.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--right_audio<span class="w"> </span>Audios/MonoRight.wav
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--stereo-audio</span></code>: Path to the input stereo audio file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--left_audio</span></code>: Path to the output left channel mono audio file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--right_audio</span></code>: Path to the output right channel mono audio file.</p></li>
+</ul>
+</section>
+<section id="audio-mixing">
+<h3>Audio Mixing<a class="headerlink" href="#audio-mixing" title="Link to this heading">¶</a></h3>
+<p>Combines multiple mono audio files into one.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>manipulation<span class="w"> </span>mixdown<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mono_audios<span class="w"> </span>Audios/MonoRight.wav<span class="w"> </span>Audios/MonoLeft.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mixed_audio<span class="w"> </span>Audios/Mixed.wav
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--mono_audios</span></code>: Paths of input mono audio files to combine.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mixed_audio</span></code>: Path for the output mixed audio file.</p></li>
+</ul>
+</section>
+<section id="audio-normalization">
+<h3>Audio Normalization<a class="headerlink" href="#audio-normalization" title="Link to this heading">¶</a></h3>
+<p>Normalizes the volume level of an audio file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>manipulation<span class="w"> </span>normalization<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--audio<span class="w"> </span>Audios/Mixed.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--normalized_audio<span class="w"> </span>Audios/MixedNormalized.wav
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--audio</span></code>: Path to the input audio file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--normalized_audio</span></code>: Path for the output normalized audio file.</p></li>
+</ul>
+</section>
+</section>
+<section id="inference">
+<h2>2. Inference<a class="headerlink" href="#inference" title="Link to this heading">¶</a></h2>
+<section id="speaker-diarization">
+<h3>Speaker Diarization<a class="headerlink" href="#speaker-diarization" title="Link to this heading">¶</a></h3>
+<p>Identifies segments for each speaker in an audio file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>diarization<span class="w"> </span>pyannote<span class="w"> </span>inference<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--audio<span class="w"> </span>Audios/MixedNormalized.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--diarization<span class="w"> </span>Diarizations/Mixed.rttm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--num_speakers<span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--device<span class="w"> </span>cuda<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--api_token<span class="w"> </span>hf_SomeLetters<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--model_name<span class="w"> </span>pyannote/speaker-diarization@2.1.1<span class="o">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--audio</span></code>: Input audio file for diarization.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diarization</span></code>: Path to save diarization results in <code class="docutils literal notranslate"><span class="pre">.rttm</span></code> format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--num_speakers</span></code>: Number of speakers to identify.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--device</span></code>: Processing device (<code class="docutils literal notranslate"><span class="pre">cuda</span></code> for GPU, <code class="docutils literal notranslate"><span class="pre">cpu</span></code> for CPU), default <code class="docutils literal notranslate"><span class="pre">cpu</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--api_token</span></code>: Hugging Face token, may be required to download the model. Can also be provided as the environment variable <strong>HF_TOKEN</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model_name</span></code>: Name of the diarization model used, default <code class="docutils literal notranslate"><span class="pre">pyannote/speaker-diarization&#64;2.1.1</span></code>.</p></li>
+</ul>
+</section>
+<section id="speaker-identification">
+<h3>Speaker Identification<a class="headerlink" href="#speaker-identification" title="Link to this heading">¶</a></h3>
+<p>Associates speakers in a mixed audio file with known audio samples.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>identification<span class="w"> </span>pyannote<span class="w"> </span>inference<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mixed_audio<span class="w"> </span>Audios/MixedNormalized.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--diarization<span class="w"> </span>Diarizations/Mixed.rttm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--mono_audios<span class="w"> </span>Audios/MonoRight.wav<span class="w"> </span>Audios/MonoLeft.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--identification<span class="w"> </span>Identifications/Mixed.json<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--device<span class="w"> </span>cuda<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--api_token<span class="w"> </span>hf_SomeLetters<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--model_names<span class="w"> </span>pyannote/embedding<span class="w"> </span>speechbrain/spkrec-ecapa-voxceleb<span class="o">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--mixed_audio</span></code>: Mixed mono audio file with multiple speakers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diarization</span></code>: Diarization results for speaker segmentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--mono_audios</span></code>: Paths of known mono audio samples for each speaker.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--identification</span></code>: Path for saving identification results in <code class="docutils literal notranslate"><span class="pre">.json</span></code> format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--device</span></code>: Processing device (<code class="docutils literal notranslate"><span class="pre">cuda</span></code> for GPU, <code class="docutils literal notranslate"><span class="pre">cpu</span></code> for CPU), default <code class="docutils literal notranslate"><span class="pre">cpu</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--api_token</span></code>: Hugging Face token, may be required to download the model. Can also be provided as the environment variable <strong>HF_TOKEN</strong>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model_names</span></code>: Names of the embedding models.</p></li>
+</ul>
+</section>
+<section id="speech-transcription">
+<h3>Speech Transcription<a class="headerlink" href="#speech-transcription" title="Link to this heading">¶</a></h3>
+<p>Use Whisper to transcribe speech in an audio file to text.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>transcription<span class="w"> </span>whisper<span class="w"> </span>inference<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--audio<span class="w"> </span>Audios/MixedNormalized.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--transcription<span class="w"> </span>Transcriptions/Mixed.vtt<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--use_hf<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--model_name<span class="w"> </span>small<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--language<span class="w"> </span>fr<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--device<span class="w"> </span>cuda<span class="o">]</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">[</span>--translate_to_english<span class="o">]</span><span class="w"> </span>
+</pre></div>
+</div>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">--audio</span></code>: Input audio file for transcription.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--transcription</span></code>: Path to save the transcription in <code class="docutils literal notranslate"><span class="pre">.vtt</span></code> format.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--use_hf</span></code>: Set this flag to use a Hugging Face model instead of OpenAI Whisper (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--model_name</span></code>: The name of the model to use.</p>
+<ul>
+<li><p><strong>For OpenAI Whisper</strong>, use one of the <a class="reference external" href="https://github.com/openai/whisper#available-models-and-languages">official model</a> sizes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--model_name<span class="w"> </span>small<span class="w">  </span><span class="c1"># Other options: tiny, base, medium, large, large-v2, large-v3</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>For a Hugging Face model</strong>, set <code class="docutils literal notranslate"><span class="pre">--use_hf</span></code> and provide a valid <a class="reference external" href="https://huggingface.co/models?other=whisper">model name</a>.<br />
+Example using Nizar Michaud’s Swiss German model:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>--use_hf<span class="w"> </span>--model_name<span class="w"> </span>nizarmichaud/whisper-large-v3-turbo-swissgerman
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--language</span></code>: Language of the audio content.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--device</span></code>: Processing device (<code class="docutils literal notranslate"><span class="pre">cuda</span></code> for GPU, <code class="docutils literal notranslate"><span class="pre">cpu</span></code> for CPU, default: <code class="docutils literal notranslate"><span class="pre">cpu</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--translate_to_english</span></code>: Whether to transcribe the audio in its original language or translate it to English (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p></li>
+</ul>
+</section>
+<section id="enhanced-transcription">
+<h3>Enhanced Transcription<a class="headerlink" href="#enhanced-transcription" title="Link to this heading">¶</a></h3>
+<p>Enhances transcription with diarization and speaker labels.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>transcription<span class="w"> </span>whisper<span class="w"> </span>enhance<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--transcription<span class="w"> </span>Transcriptions/Mixed.vtt<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--diarization<span class="w"> </span>Diarizations/Mixed.rttm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--identification<span class="w"> </span>Identifications/Mixed.json<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--enhanced_transcription<span class="w"> </span>Transcriptions/MixedEnhanced.vtt
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--transcription</span></code>: Path to the initial transcription file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--diarization</span></code>: Diarization data file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--identification</span></code>: Identification data file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--enhanced_transcription</span></code>: Path to save the enhanced transcription.</p></li>
+</ul>
+</section>
+</section>
+<section id="visualization">
+<h2>3. Visualization<a class="headerlink" href="#visualization" title="Link to this heading">¶</a></h2>
+<section id="diarization-visualization">
+<h3>Diarization Visualization<a class="headerlink" href="#diarization-visualization" title="Link to this heading">¶</a></h3>
+<p>Generates a visual timeline of speaker segments.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psifx<span class="w"> </span>audio<span class="w"> </span>diarization<span class="w"> </span>visualization<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--diarization<span class="w"> </span>Diarizations/Mixed.rttm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--visualization<span class="w"> </span>Visualizations/Mixed.png
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--diarization</span></code>: Diarization data file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--visualization</span></code>: Path for saving the visualization image.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="video.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Video Processing Guide</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="usage.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Usage</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, UNIL
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Audio Processing Guide</a><ul>
+<li><a class="reference internal" href="#audio-pre-processing">1. Audio Pre-processing</a><ul>
+<li><a class="reference internal" href="#audio-extraction">Audio Extraction</a></li>
+<li><a class="reference internal" href="#audio-conversion">Audio Conversion</a></li>
+<li><a class="reference internal" href="#audio-split">Audio Split</a></li>
+<li><a class="reference internal" href="#audio-mixing">Audio Mixing</a></li>
+<li><a class="reference internal" href="#audio-normalization">Audio Normalization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inference">2. Inference</a><ul>
+<li><a class="reference internal" href="#speaker-diarization">Speaker Diarization</a></li>
+<li><a class="reference internal" href="#speaker-identification">Speaker Identification</a></li>
+<li><a class="reference internal" href="#speech-transcription">Speech Transcription</a></li>
+<li><a class="reference internal" href="#enhanced-transcription">Enhanced Transcription</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#visualization">3. Visualization</a><ul>
+<li><a class="reference internal" href="#diarization-visualization">Diarization Visualization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=a58bc63e"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    </body>
+</html>
