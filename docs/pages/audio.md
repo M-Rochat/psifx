@@ -1,5 +1,7 @@
 # Audio Processing Guide
 
+<div class="cli-docs">
+
 This document covers the `psifx` commands for audio pre-processing, inference, and visualization.
 
 ## 1. Audio Pre-processing
@@ -154,3 +156,4 @@ psifx audio diarization visualization \
 ```
 - `--diarization`: Diarization data file.
 - `--visualization`: Path for saving the visualization image.
+</div>

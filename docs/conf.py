@@ -77,7 +77,8 @@ html_title = f"{project} - {release}"
 html_theme = "furo"
 html_favicon = "https://emoji.aranja.com/static/emoji-data/img-apple-160/1f9d0.png"
 html_static_path = ["_static"]
-html_css_files = ["css/custom.css"]
+html_css_files = ["css/custom.css", "css/toggle.css"]
+html_js_files = ["js/toggle.js"]
 
 # Make the background colour lighter.
 html_theme_options = {

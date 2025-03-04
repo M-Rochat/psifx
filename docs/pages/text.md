@@ -1,5 +1,7 @@
 # Text Processing Guide
 
+<div class="cli-docs">
+
 ## Model
 Models from Hugging Face, Ollama, OpenAI, and Anthropic are all supported.
 Hugging Face and Ollama models are free of charge and can be run locally, while OpenAI and Anthropic models are hosted externally, requiring an API key for access.
@@ -174,3 +176,4 @@ The steps are all optional and are applied in the following order:
   A list of expected output values. 
   
   _If the final result is not found in this list, an error message is displayed._
+</div>

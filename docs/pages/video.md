@@ -1,5 +1,7 @@
 # Video Processing Guide
 
+<div class="cli-docs">
+
 This document provides instructions for using the `psifx` package for video inference and visualization, including manipulation, pose, and face.
 
 
@@ -122,4 +124,4 @@ psifx video face openface visualization \
 - `--depth`: Projection: assumed static depth of the subject in meters, default `3.0`.
 - `--f_x`, `--f_y`: Projection: x-axis (respectively y-axis) of the focal length, default `None`.
 - `--c_x`, `--c_y`: Projection: x-axis (respectively y-axis) of the principal point, default `None`.
-
+</div>

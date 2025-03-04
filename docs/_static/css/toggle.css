@@ -1,0 +1,16 @@
+#toggle-docs {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#toggle-docs:hover {
+    background-color: #0056b3;
+}
